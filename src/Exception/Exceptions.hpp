@@ -18,6 +18,10 @@ struct DynamixelException : virtual boost::exception, virtual std::exception {};
 
 struct DynamixelAdapterException : virtual boost::exception, virtual std::exception {};
 
+struct DynamixelPacketException : virtual boost::exception, virtual std::exception {};
+
+struct DynamixelStatusPacketException : virtual boost::exception, virtual std::exception {};
+
 }
 }
 
