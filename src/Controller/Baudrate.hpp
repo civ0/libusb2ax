@@ -8,7 +8,7 @@
 
 namespace Dynamixel
 {
-namespace Adapter
+namespace Controller
 {
 
 inline int GetBaudrate(const unsigned int baudrate)

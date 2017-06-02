@@ -23,14 +23,24 @@ public:
 	~InstructionPacket() = default;
 
 public:
-	size_t size() const
+	decltype(auto) size() const
 	{
 		return _packet.size();
 	}
 
-	uint8_t operator[](size_t index) const
+	decltype(auto) operator[](size_t index) const
 	{
 		return _packet[index];
+	}
+
+	decltype(auto) begin()
+	{
+		return _packet.begin();
+	}
+
+	decltype(auto) end()
+	{
+		return _packet.end();
 	}
 
 	const uint8_t* DataPointer() const

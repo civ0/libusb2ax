@@ -30,6 +30,16 @@ public:
 		SyncWrite = 0x83
 	};
 
+	enum class ErrorCode : uint8_t {
+		InputVoltage = 0x01,
+		AngleLimit = 0x02,
+		Overheating = 0x04,
+		Range = 0x08,
+		Checksum = 0x10,
+		Overload = 0x20,
+		Instruction = 0x40
+	};
+
 	enum class DecodeState {
 		Invalid,
 		Ongoing,
@@ -41,9 +51,11 @@ public:
 public:
 	static std::vector<uint8_t> PackInstruction(id_t, Instruction);
 	static std::vector<uint8_t> PackInstruction(id_t, Instruction, const std::vector<uint8_t>&);
-	static DecodeState Unpack(const std::vector<uint8_t>&, id_t&, std::vector<uint8_t>&);
+	static DecodeState Unpack(const std::vector<uint8_t>&, id_t&, std::vector<uint8_t>&,
+	                          std::vector<ErrorCode>&);
 private:
 	static bool DetectStatusHeader(const std::vector<uint8_t>&);
+	static void GetErrors(const uint8_t&, std::vector<ErrorCode>&);
 	static uint8_t Checksum(const std::vector<uint8_t>&);
 };
 
