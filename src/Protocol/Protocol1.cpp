@@ -42,7 +42,7 @@ std::vector<uint8_t> Protocol1::PackInstruction(id_t id, Instruction instruction
 	packet[0] = 0xFF;
 	packet[1] = 0xFF;
 	packet[2] = id;
-	packet[3] = 2;
+	packet[3] = packetSize - 4;
 	packet[4] = static_cast<instr_t>(instruction);
 
 	for (size_t i = 0; i != parameters.size(); ++i)
@@ -74,7 +74,7 @@ Protocol1::DecodeState Protocol1::Unpack(const std::vector<uint8_t>& packet, id_
 		uint8_t errors = packet[4];
 		if (errors != 0)
 			GetErrors(errors, errorVec);
-		return DecodeState::Done;
+		// return DecodeState::Done;
 	}
 
 	// static_cast<uint8_t>(length - 2) to suppress -Wsign-compare

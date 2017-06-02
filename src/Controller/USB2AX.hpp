@@ -19,7 +19,7 @@ namespace Controller
 class USB2AX {
 public:
 	USB2AX()
-		: _recvTimeout(1000), _fd(-1), _reportBadPackets(false) {}
+		: _recvTimeout(100), _fd(-1), _reportBadPackets(false) {}
 
 	USB2AX(const std::string& name, int baudrate = B1000000, size_t recvTimeout = 100)
 		: _recvTimeout(recvTimeout), _fd(-1), _reportBadPackets(false)

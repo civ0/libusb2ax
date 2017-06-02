@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <vector>
 
-using namespace Dynamixel::Protocol;
+namespace proto = Dynamixel::Protocol;
 
 namespace Dynamixel
 {
@@ -18,13 +18,21 @@ namespace Servo
 template <typename Model>
 class Protocol1Servo {
 public:
+	using Protocol1 = proto::Protocol1;
+	using Instruction = proto::Protocol1::Instruction;
+
 	Protocol1Servo() = default;
 	~Protocol1Servo() = default;
 
 	Protocol1Servo(uint8_t id) : _id(id) { }
 public:
+	// Instructions
 	InstructionPacket<Protocol1> Ping();
-	void Test();
+	// Get
+	InstructionPacket<Protocol1> GetPosition();
+	InstructionPacket<Protocol1> GetTemperature();
+	// Set
+	InstructionPacket<Protocol1> SetPosition(double);
 private:
 	uint8_t _id;
 };

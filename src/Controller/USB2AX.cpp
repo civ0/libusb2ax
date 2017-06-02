@@ -102,6 +102,7 @@ StatusPacket<ProtocolType> USB2AX::Receive()
 		int ret = read(_fd, &byte, sizeof(byte));
 		if (ret > 0) {
 			packet.push_back(byte);
+			std::cout << static_cast<unsigned>(byte) << " ";
 			state = status.Decode(packet);
 			if (state == DecodeState::Invalid)
 				throw ex::DynamixelStatusPacketException()
@@ -112,8 +113,9 @@ StatusPacket<ProtocolType> USB2AX::Receive()
 
 		if (currentTime - time > _recvTimeout)
 			throw ex::DynamixelStatusPacketException()
-			                << ex::StringInfo("fuck");
+			                << ex::StringInfo("Timeout while reading bytes");
 	} while (state != DecodeState::Done);
+	std::cout << std::endl;
 
 	return status;
 }
