@@ -10,9 +10,10 @@ LDFLAGS=-lpthread
 LDLIBS=-L/usr/include/boost
 
 SOURCES=src/Protocol/Protocol1.cpp                                                                 \
-	src/Controller/USB2AX.cpp                                                                     \
+	src/Controller/USB2AX.cpp                                                                  \
+	src/Servo/Protocol1Model.cpp                                                               \
 	src/Servo/Protocol1Servo.cpp                                                               \
-	src/StatusPacket.cpp                                                                           \
+	src/StatusPacket.cpp                                                                       \
 	src/test.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)

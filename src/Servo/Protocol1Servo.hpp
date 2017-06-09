@@ -1,37 +1,34 @@
 #ifndef SERVO_PROTOCOL1SERVO_H
 #define SERVO_PROTOCOL1SERVO_H
 
-#include "./ServoModels.hpp"
+#include "./Protocol1Model.hpp"
 #include "./../Protocol/Protocols.hpp"
 #include "./../InstructionPacket.hpp"
 
 #include <cstdint>
 #include <vector>
 
-namespace proto = Dynamixel::Protocol;
-
 namespace Dynamixel
 {
 namespace Servo
 {
 
-template <typename Model>
 class Protocol1Servo {
 public:
-	using Protocol1 = proto::Protocol1;
-	using Instruction = proto::Protocol1::Instruction;
+	using p1Model = Protocol1Model;
+	using p1 = Dynamixel::Protocol::Protocol1;
+	using Instruction = Protocol::Protocol1::Instruction;
 
 	Protocol1Servo() = default;
 	~Protocol1Servo() = default;
 
-	Protocol1Servo(uint8_t id) : _id(id) { }
+	Protocol1Servo(p1Model::Name, uint8_t);
 public:
 	// Instructions
-	InstructionPacket<Protocol1> Ping();
-	InstructionPacket<Protocol1> GetTemperature();
-	InstructionPacket<Protocol1> GetPosition();
-	InstructionPacket<Protocol1> SetPosition(double);
+	InstructionPacket<p1> Ping();
+	InstructionPacket<p1> SetPosition(double);
 private:
+	Protocol1Model _model;
 	uint8_t _id;
 };
 

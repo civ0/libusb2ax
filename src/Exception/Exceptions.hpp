@@ -22,6 +22,8 @@ struct DynamixelPacketException : virtual boost::exception, virtual std::excepti
 
 struct DynamixelStatusPacketException : virtual boost::exception, virtual std::exception {};
 
+struct DynamixelUnknownServoModelException : virtual boost::exception, virtual std::exception {};
+
 }
 }
 

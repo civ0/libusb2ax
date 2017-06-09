@@ -3,6 +3,6 @@
 
 #include "./Protocol1Servo.hpp"
 
-#include "./ServoModels.hpp"
+#include "./Protocol1Model.hpp"
 
 #endif
