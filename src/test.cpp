@@ -18,14 +18,14 @@ int main(int argc, char** argv)
 	try {
 		con::USB2AX usb2ax(argv[1]);
 
-		sv::Protocol1Servo<sv::AX12> servo(20);
+		sv::Protocol1Servo<sv::AX12> servo(19);
 
 		auto message = servo.Ping();
 
 		usb2ax.Send(message);
 		auto res = usb2ax.Receive<proto>();
 
-		if (res.ID() == 20)
+		if (res.ID() == 19)
 			std::cout << "Fuck yeah!" << std::endl;
 
 		message = servo.GetPosition();
@@ -48,6 +48,7 @@ int main(int argc, char** argv)
 		unsigned value = res.Parameters()[0] + (res.Parameters()[1] << 8);
 		double degree = value / 1023.0 * 300.0 - 150.0;
 		std::cout << degree << std::endl;
+
 
 		for (int angle = -150; angle <= 150; angle += 10) {
 			message = servo.SetPosition(angle);

@@ -19,17 +19,17 @@ InstructionPacket<Protocol1> Protocol1Servo<Model>::Ping()
 }
 
 template <typename Model>
-InstructionPacket<Protocol1> Protocol1Servo<Model>::GetPosition()
-{
-	return InstructionPacket<Protocol1>(_id, Instruction::Read,
-	{static_cast<uint8_t>(Model::Address::PresentPosition), 2});
-}
-
-template <typename Model>
 InstructionPacket<Protocol1> Protocol1Servo<Model>::GetTemperature()
 {
 	return InstructionPacket<Protocol1>(_id, Instruction::Read,
 	{static_cast<uint8_t>(Model::Address::PresentTemperature), 1});
+}
+
+template <typename Model>
+InstructionPacket<Protocol1> Protocol1Servo<Model>::GetPosition()
+{
+	return InstructionPacket<Protocol1>(_id, Instruction::Read,
+	{static_cast<uint8_t>(Model::Address::PresentPosition), 2});
 }
 
 template <typename Model>

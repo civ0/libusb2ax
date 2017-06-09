@@ -1,5 +1,5 @@
-#ifndef AX12_H
-#define AX12_H
+#ifndef SERVO_AX12_H
+#define SERVO_AX12_H
 
 #include <cstdint>
 

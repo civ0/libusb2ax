@@ -28,10 +28,8 @@ public:
 public:
 	// Instructions
 	InstructionPacket<Protocol1> Ping();
-	// Get
-	InstructionPacket<Protocol1> GetPosition();
 	InstructionPacket<Protocol1> GetTemperature();
-	// Set
+	InstructionPacket<Protocol1> GetPosition();
 	InstructionPacket<Protocol1> SetPosition(double);
 private:
 	uint8_t _id;
