@@ -10,14 +10,14 @@ namespace Dynamixel
 namespace Protocol
 {
 
-template <typename Protocol>
+template <class Protocol>
 inline uint8_t GetBaudrateID(unsigned int baudrate)
 {
 	return 0;
 }
 
 template <>
-inline uint8_t GetBaudrateID<typename Protocol::Protocol1>(unsigned int baudrate)
+inline uint8_t GetBaudrateID<class Protocol::Protocol1>(unsigned int baudrate)
 {
 	switch (baudrate) {
 	case 9600:

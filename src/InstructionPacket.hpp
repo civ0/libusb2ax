@@ -8,7 +8,7 @@
 namespace Dynamixel
 {
 
-template <typename ProtocolType>
+template <class ProtocolType>
 class InstructionPacket {
 public:
 	InstructionPacket(typename ProtocolType::id_t id,

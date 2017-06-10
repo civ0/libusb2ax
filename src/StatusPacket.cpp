@@ -1,12 +1,13 @@
-#include "./StatusPacket.hpp"
-#include "./Exception/Exceptions.hpp"
+#include "StatusPacket.hpp"
+
+#include "Exception/Exceptions.hpp"
 
 namespace ex = Dynamixel::Exception;
 
 namespace Dynamixel
 {
 
-template <typename ProtocolType>
+template <class ProtocolType>
 typename ProtocolType::id_t StatusPacket<ProtocolType>::ID() const
 {
 	if (!_valid)
@@ -15,7 +16,7 @@ typename ProtocolType::id_t StatusPacket<ProtocolType>::ID() const
 	return _id;
 }
 
-template <typename ProtocolType>
+template <class ProtocolType>
 const std::vector<uint8_t> StatusPacket<ProtocolType>::Parameters() const
 {
 	if (!_valid)
@@ -24,13 +25,13 @@ const std::vector<uint8_t> StatusPacket<ProtocolType>::Parameters() const
 	return _parameters;
 }
 
-template <typename ProtocolType>
-const std::vector<typename ProtocolType::ErrorCode> StatusPacket<ProtocolType>::Errors() const
+template <class ProtocolType>
+const std::vector<class ProtocolType::ErrorCode> StatusPacket<ProtocolType>::Errors() const
 {
 	return _errors;
 }
 
-template <typename ProtocolType>
+template <class ProtocolType>
 typename ProtocolType::DecodeState StatusPacket<ProtocolType>::Decode(const std::vector<uint8_t>& packet)
 {
 	using DecodeState = typename ProtocolType::DecodeState;

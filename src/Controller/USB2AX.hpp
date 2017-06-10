@@ -36,9 +36,9 @@ public:
 	void CloseSerial();
 	void Flush();
 	bool IsOpen();
-	template <typename ProtocolType>
+	template <class ProtocolType>
 	void Send(const InstructionPacket<ProtocolType>&);
-	template <typename ProtocolType>
+	template <class ProtocolType>
 	StatusPacket<ProtocolType> Receive();
 private:
 	std::chrono::milliseconds _recvTimeout;

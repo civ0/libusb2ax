@@ -64,7 +64,7 @@ bool USB2AX::IsOpen()
 	return (_fd != -1);
 }
 
-template <typename ProtocolType>
+template <class ProtocolType>
 void USB2AX::Send(const InstructionPacket<ProtocolType>& packet)
 {
 	if (_fd == -1)
@@ -81,7 +81,7 @@ void USB2AX::Send(const InstructionPacket<ProtocolType>& packet)
 
 template void  USB2AX::Send<proto::Protocol1>(const InstructionPacket<proto::Protocol1>&);
 
-template <typename ProtocolType>
+template <class ProtocolType>
 StatusPacket<ProtocolType> USB2AX::Receive()
 {
 	using DecodeState = typename ProtocolType::DecodeState;
@@ -102,7 +102,6 @@ StatusPacket<ProtocolType> USB2AX::Receive()
 		int ret = read(_fd, &byte, sizeof(byte));
 		if (ret > 0) {
 			packet.push_back(byte);
-			std::cout << static_cast<unsigned>(byte) << " ";
 			state = status.Decode(packet);
 			if (state == DecodeState::Invalid)
 				throw ex::DynamixelStatusPacketException()
@@ -115,7 +114,6 @@ StatusPacket<ProtocolType> USB2AX::Receive()
 			throw ex::DynamixelStatusPacketException()
 			                << ex::StringInfo("Timeout while reading bytes");
 	} while (state != DecodeState::Done);
-	std::cout << std::endl;
 
 	return status;
 }

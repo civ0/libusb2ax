@@ -14,6 +14,7 @@ SOURCES=src/Protocol/Protocol1.cpp                                              
 	src/Servo/Protocol1Model.cpp                                                               \
 	src/Servo/Protocol1Servo.cpp                                                               \
 	src/StatusPacket.cpp                                                                       \
+	src/ServoManager.cpp                                                                       \
 	src/test.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)

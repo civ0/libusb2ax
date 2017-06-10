@@ -1,4 +1,4 @@
-#include "./Protocol1Model.hpp"
+#include "Protocol1Model.hpp"
 
 #include "../Exception/Exceptions.hpp"
 

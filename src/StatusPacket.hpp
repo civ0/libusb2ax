@@ -5,12 +5,12 @@
 #include <cstdint>
 #include <vector>
 
-#include "./Protocol/Protocols.hpp"
+#include "Protocol/Protocols.hpp"
 
 namespace Dynamixel
 {
 
-template <typename ProtocolType>
+template <class ProtocolType>
 class StatusPacket {
 public:
 	using DecodeState = typename ProtocolType::DecodeState;

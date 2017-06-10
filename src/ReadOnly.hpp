@@ -4,7 +4,7 @@
 namespace Dynamixel
 {
 
-template <typename Owner, typename Primitive>
+template <class Owner, class Primitive>
 class ReadOnly {
 	friend Owner;
 public:
@@ -13,7 +13,7 @@ public:
 		return _value;
 	}
 protected:
-	template <typename T> inline T operator=(const T& rhs)
+	template <class T> inline T operator=(const T& rhs)
 	{
 		return _value = rhs;
 	}
