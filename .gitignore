@@ -31,3 +31,6 @@ test
 
 # Sublime Text files
 *.sublime-*
+
+# Sphinx documentation
+docs/_build/
