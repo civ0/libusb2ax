@@ -12,7 +12,8 @@ LDLIBS=-L/usr/include/boost
 SOURCES=src/Protocol/Protocol1.cpp                                                                 \
 	src/Controller/USB2AX.cpp                                                                  \
 	src/Servo/Protocol1Model.cpp                                                               \
-	src/Servo/Protocol1Servo.cpp                                                               \
+	src/Servo/Protocol1ServoCommands.cpp                                                       \
+	src/Servo/ManagedProtocol1Servo                                                            \
 	src/StatusPacket.cpp                                                                       \
 	src/ServoManager.cpp                                                                       \
 	src/test.cpp

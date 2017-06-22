@@ -12,8 +12,8 @@ namespace Servo
 
 class Protocol1Model {
 public:
-	Protocol1Model() = default; // default constructor must be public for usage in map
 	enum class Name { AX12 };
+	Protocol1Model() = default; // default constructor must be public for usage in map
 	static Protocol1Model FromName(Name);
 	~Protocol1Model() = default;
 private:

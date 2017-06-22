@@ -9,6 +9,6 @@ ServoManager<Servo>::ServoManager()
 
 }
 
-template class ServoManager<sv::Protocol1Servo>;
+template class ServoManager<sv::Protocol1ServoCommands>;
 
 }
