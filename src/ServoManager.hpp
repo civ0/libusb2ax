@@ -1,36 +1,37 @@
 #ifndef SERVOMANAGER_H
 #define SERVOMANAGER_H
 
-#include <atomic>
 #include <cstdint>
 #include <map>
-#include <thread>
+#include <vector>
+#include <string>
 
 #include "Controller/USB2AX.hpp"
 #include "Exception/Exceptions.hpp"
 #include "InstructionPacket.hpp"
 #include "Protocol/Protocols.hpp"
-#include "Servo/Servos.hpp"
+#include "StatusPacket.hpp"
 
 namespace Dynamixel
 {
 
 namespace con = Dynamixel::Controller;
-namespace sv = Dynamixel::Servo;
 namespace ex = Dynamixel::Exception;
 namespace proto = Dynamixel::Protocol;
 
 
 template <class Servo>
 class ServoManager {
+	using p1 = Dynamixel::Protocol::Protocol1;
 public:
-	ServoManager();
-private:
-
+	ServoManager(std::string);
 public:
-	std::map<size_t, std::atomic<Servo>> Servos;
+	StatusPacket<p1> SendAndReceive(const InstructionPacket<p1>&);
+public:
+	std::map<uint8_t, Servo> Servos;
 private:
-	std::atomic<bool> _updating;
+	con::USB2AX _usb2ax;
+	// std::atomic<bool> _updating;
 };
 
 
