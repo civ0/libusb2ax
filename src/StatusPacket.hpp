@@ -18,8 +18,8 @@ public:
 	StatusPacket() : _valid(false) { }
 public:
 	typename ProtocolType::id_t ID() const;
-	const std::vector<uint8_t> Parameters() const;
-	const std::vector<ErrorCode> Errors() const;
+	std::vector<uint8_t> Parameters() const;
+	std::vector<ErrorCode> Errors() const;
 	DecodeState Decode(const std::vector<uint8_t>&);
 private:
 	bool _valid;

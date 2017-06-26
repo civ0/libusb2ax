@@ -17,7 +17,7 @@ typename ProtocolType::id_t StatusPacket<ProtocolType>::ID() const
 }
 
 template <class ProtocolType>
-const std::vector<uint8_t> StatusPacket<ProtocolType>::Parameters() const
+std::vector<uint8_t> StatusPacket<ProtocolType>::Parameters() const
 {
 	if (!_valid)
 		throw ex::DynamixelStatusPacketException()
@@ -26,7 +26,7 @@ const std::vector<uint8_t> StatusPacket<ProtocolType>::Parameters() const
 }
 
 template <class ProtocolType>
-const std::vector<class ProtocolType::ErrorCode> StatusPacket<ProtocolType>::Errors() const
+std::vector<typename ProtocolType::ErrorCode> StatusPacket<ProtocolType>::Errors() const
 {
 	return _errors;
 }

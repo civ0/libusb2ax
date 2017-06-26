@@ -3,7 +3,7 @@ RM=rm -rf
 
 INCLUDES=-I/usr/include/boost
 
-CXXFLAGS=-std=c++14 -O3 -Wall -pedantic -pthread -lboost_exception -c $(INCLUDES)
+CXXFLAGS=-std=c++14 -O3 -Wall -Wextra -Wshadow -pedantic -pthread -c $(INCLUDES)
 
 LDFLAGS=-lpthread
 

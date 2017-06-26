@@ -71,6 +71,8 @@ void USB2AX::Send(const InstructionPacket<ProtocolType>& packet)
 		throw ex::DynamixelControllerException()
 		                << ex::StringInfo("Adapter was closed while attempting to send");
 
+	// Hack: the elements of the vector are stored consecutively, so pointer arithmetic can be
+	// used
 	int ret = write(_fd, packet.DataPointer(), packet.size());
 
 	// check if bytes where sent and check if the correct number of bytes where sent

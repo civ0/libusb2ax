@@ -20,6 +20,10 @@ public:
 	                  const std::vector<uint8_t>& parameters)
 		: _packet(ProtocolType::PackInstruction(id, instruction, parameters)) {}
 
+	InstructionPacket(const InstructionPacket& other) : _packet(other._packet) {}
+
+	InstructionPacket(InstructionPacket&& other) : _packet(other._packet) {}
+
 	~InstructionPacket() = default;
 
 public:
