@@ -13,7 +13,8 @@
 #include "../ReadOnly.hpp"
 #include "./../ServoManager.hpp"
 #include "./ServoRegister.hpp"
-#include "Servos.hpp"
+#include "./Protocol1ServoCommands.hpp"
+#include "./Protocol1Model.hpp"
 
 
 namespace Dynamixel

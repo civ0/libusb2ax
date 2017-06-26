@@ -9,8 +9,8 @@ using p1Model = Protocol1Model;
 
 ManagedProtocol1Servo::ManagedProtocol1Servo()
 {
-// needed for compilation because no default constructor can be sythesized.
-// if not defined, ServoManager.Servos.emplace will not compile, as it uses the default constructor
+	// needed for compilation because no default constructor can be sythesized.
+	// if not defined, ServoManager.Servos.emplace will not compile, as it uses the default constructor
 }
 
 ManagedProtocol1Servo::ManagedProtocol1Servo(ServoManager<ManagedProtocol1Servo>* manager,
