@@ -38,6 +38,7 @@ int main(int argc, char** argv)
 			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		}
 		manager.StopUpdating();
+
 	} catch (boost::exception& e) {
 		if (std::string const* error = boost::get_error_info<ex::StringInfo>(e))
 			std::cerr << "Error: " << *error << std::endl;
