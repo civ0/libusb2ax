@@ -40,17 +40,22 @@ void ServoManager<Servo, Protocol>::Update(void* thisPointer)
 	ServoManager<Servo, Protocol>* manager =
 	        static_cast<ServoManager<Servo, Protocol>*>(thisPointer);
 
+	// fill the instruction queue with instructions to be run continuously in the
+	// update thread
 	for (auto it = manager->Servos.begin(); it != manager->Servos.end(); ++it) {
 		it->second.UpdatePosition(false);
 		it->second.UpdateSpeed(false);
 		it->second.UpdateTemperature(false);
 	}
+	// create vector from previous instructions
 	std::vector<std::tuple<InstructionPacket<Protocol>, parameterCallback>>
 	                loop(manager->instructions.begin(), manager->instructions.end());
+	// clear the user instruction queue so it can be used normally
 	manager->instructions.clear();
 
 	auto loopIndex = loop.begin();
 	while (manager->updating == true) {
+		// when the queue holds instructions execute one
 		if (manager->instructions.size() != 0) {
 			write_lock lock(manager->mtx);
 			auto instr = manager->instructions.back();
@@ -60,6 +65,7 @@ void ServoManager<Servo, Protocol>::Update(void* thisPointer)
 			std::get<1>(instr)(std::forward<std::vector<uint8_t>>(response.Parameters()));
 		}
 
+		// always execute one instruction from the loop
 		manager->usb2ax.Send(std::get<0>(*loopIndex));
 		auto response = manager->usb2ax.Receive<Protocol>();
 		std::get<1>(*loopIndex)(response.Parameters());
@@ -68,10 +74,6 @@ void ServoManager<Servo, Protocol>::Update(void* thisPointer)
 			++loopIndex;
 		else
 			loopIndex = loop.begin();
-
-		// for (auto it = manager->Servos.begin(); it != manager->Servos.end(); ++it) {
-
-		// }
 	}
 
 	return;

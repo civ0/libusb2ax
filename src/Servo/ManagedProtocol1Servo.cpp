@@ -30,6 +30,13 @@ bool ManagedProtocol1Servo::Ping()
 	return false;
 }
 
+/*
+ * Callback Explanation
+ * 
+ * The callback lambda gets called from the update thread. Because the lambda uses other members,
+ * the this pointer must be captured
+ */
+
 void ManagedProtocol1Servo::UpdatePosition(bool wait)
 {
 	auto message = Protocol1ServoCommands::GetPosition(model, id);
