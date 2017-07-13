@@ -66,5 +66,16 @@ void ManagedProtocol1Servo::SetSpeed(double speed)
 	manager->InsertInstruction(std::move(message), std::move(GetEmptyCallback()));
 }
 
+void ManagedProtocol1Servo::UpdateTemperature(bool wait)
+{
+	auto message = Protocol1ServoCommands::GetTemperature(model, id);
+	parameterCallback callback = [this, wait](std::vector<uint8_t>&& parameters) {
+		this->PresentTemperature.Set(parameters[0], wait);
+	};
+	manager->InsertInstruction(std::move(message), std::move(callback));
+	if (wait)
+		WaitForUpdate(PresentTemperature);
+}
+
 }
 }

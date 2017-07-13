@@ -40,6 +40,7 @@ public: // methods
 	void SetPosition(double);
 	void UpdateSpeed(bool);
 	void SetSpeed(double);
+	void UpdateTemperature(bool);
 private:
 	inline parameterCallback GetEmptyCallback()
 	{
@@ -61,6 +62,7 @@ public: // attributes
 	ServoRegister<double> PresentPosition;
 	ServoRegister<double> MovingSpeed;
 	ServoRegister<double> PresentSpeed;
+	ServoRegister<uint8_t> PresentTemperature;
 private: // attributes
 	ServoManager<ManagedProtocol1Servo, p1>* manager;
 	Protocol1Model model;

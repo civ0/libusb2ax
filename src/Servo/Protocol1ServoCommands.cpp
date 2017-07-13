@@ -47,5 +47,10 @@ InstructionPacket<p1> Protocol1ServoCommands::SetSpeed(const p1Model& model, uin
 	return InstructionPacket<p1>(id, Instruction::Write, {model.MovingSpeed(), low, high});
 }
 
+InstructionPacket<p1> Protocol1ServoCommands::GetTemperature(const p1Model& model, uint8_t id)
+{
+	return InstructionPacket<p1>(id, Instruction::Read, {model.PresentTemperature(), 1});
+}
+
 }
 }

@@ -42,6 +42,8 @@ void ServoManager<Servo, Protocol>::Update(void* thisPointer)
 
 	for (auto it = manager->Servos.begin(); it != manager->Servos.end(); ++it) {
 		it->second.UpdatePosition(false);
+		it->second.UpdateSpeed(false);
+		it->second.UpdateTemperature(false);
 	}
 	std::vector<std::tuple<InstructionPacket<Protocol>, parameterCallback>>
 	                loop(manager->instructions.begin(), manager->instructions.end());
