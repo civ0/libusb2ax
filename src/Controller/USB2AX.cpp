@@ -1,4 +1,4 @@
-#include "./USB2AX.hpp"
+#include "USB2AX.hpp"
 
 #include <cstring>
 #include <fcntl.h>
@@ -22,13 +22,13 @@ void USB2AX::OpenSerial(const std::string& name, int baudrate)
 {
 	struct termios tio_serial;
 
-	if (_fd != -1)
+	if (fd != -1)
 		throw ex::DynamixelControllerException()
 		                << ex::StringInfo("Error opening adapter " + name
 		                                  + ": resource busy");
 
-	_fd = open(name.c_str(), O_RDWR | O_NOCTTY);
-	if (_fd == -1)
+	fd = open(name.c_str(), O_RDWR | O_NOCTTY);
+	if (fd == -1)
 		throw ex::DynamixelControllerException()
 		                << ex::StringInfo("Error opening adapter " + name)
 		                << boost::errinfo_errno(errno);
@@ -44,36 +44,36 @@ void USB2AX::OpenSerial(const std::string& name, int baudrate)
 	cfsetospeed(&tio_serial, baudrate);
 
 	cfgetispeed(&tio_serial);
-	tcflush(_fd, TCIFLUSH);
-	tcsetattr(_fd, TCSANOW, &tio_serial);
+	tcflush(fd, TCIFLUSH);
+	tcsetattr(fd, TCSANOW, &tio_serial);
 }
 
 void USB2AX::CloseSerial()
 {
-	close(_fd);
-	_fd = -1;
+	close(fd);
+	fd = -1;
 }
 
 void USB2AX::Flush()
 {
-	tcflush(_fd, TCIFLUSH);
+	tcflush(fd, TCIFLUSH);
 }
 
 bool USB2AX::IsOpen()
 {
-	return (_fd != -1);
+	return (fd != -1);
 }
 
 template <class ProtocolType>
 void USB2AX::Send(const InstructionPacket<ProtocolType>& packet)
 {
-	if (_fd == -1)
+	if (fd == -1)
 		throw ex::DynamixelControllerException()
 		                << ex::StringInfo("Adapter was closed while attempting to send");
 
 	// Hack: the elements of the vector are stored consecutively, so pointer arithmetic can be
 	// used
-	int ret = write(_fd, packet.DataPointer(), packet.size());
+	int ret = write(fd, packet.DataPointer(), packet.size());
 
 	// check if bytes where sent and check if the correct number of bytes where sent
 	if (ret > 0 && static_cast<size_t>(ret) != packet.size())
@@ -88,7 +88,7 @@ StatusPacket<ProtocolType> USB2AX::Receive()
 {
 	using DecodeState = typename ProtocolType::DecodeState;
 
-	if (_fd == -1)
+	if (fd == -1)
 		throw ex::DynamixelControllerException()
 		                << ex::StringInfo("Adapter was closed while attempting to read");
 
@@ -101,7 +101,7 @@ StatusPacket<ProtocolType> USB2AX::Receive()
 		auto currentTime = std::chrono::steady_clock::now();
 
 		uint8_t byte;
-		int ret = read(_fd, &byte, sizeof(byte));
+		int ret = read(fd, &byte, sizeof(byte));
 		if (ret > 0) {
 			packet.push_back(byte);
 			state = status.Decode(packet);
@@ -112,7 +112,7 @@ StatusPacket<ProtocolType> USB2AX::Receive()
 			time = currentTime;
 		}
 
-		if (currentTime - time > _recvTimeout)
+		if (currentTime - time > recvTimeout)
 			throw ex::DynamixelStatusPacketException()
 			                << ex::StringInfo("Timeout while reading bytes");
 	} while (state != DecodeState::Done);

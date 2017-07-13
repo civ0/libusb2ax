@@ -1,15 +1,15 @@
-#ifndef ADAPTER_USB2AX_H
-#define ADAPTER_USB2AX_H
+#ifndef ADAPTER_USB2AX_HPP
+#define ADAPTER_USB2AX_HPP
 
-#include <cstddef>
 #include <chrono>
+#include <cstddef>
 #include <string>
 #include <termios.h>
 
-#include "./Baudrate.hpp"
-#include "./../Exception/Exceptions.hpp"
-#include "./../InstructionPacket.hpp"
-#include "./../StatusPacket.hpp"
+#include "../Exception/Exceptions.hpp"
+#include "../InstructionPacket.hpp"
+#include "../StatusPacket.hpp"
+#include "Baudrate.hpp"
 
 namespace Dynamixel
 {
@@ -19,10 +19,10 @@ namespace Controller
 class USB2AX {
 public:
 	USB2AX()
-		: _recvTimeout(100), _fd(-1), _reportBadPackets(false) {}
+		: recvTimeout(100), fd(-1), reportBadPackets(false) {}
 
-	USB2AX(const std::string& name, int baudrate = B1000000, size_t recvTimeout = 100)
-		: _recvTimeout(recvTimeout), _fd(-1), _reportBadPackets(false)
+	USB2AX(const std::string& name, int baudrate = B1000000, size_t timeout = 100)
+		: recvTimeout(timeout), fd(-1), reportBadPackets(false)
 	{
 		OpenSerial(name, baudrate);
 	}
@@ -41,10 +41,10 @@ public:
 	template <class ProtocolType>
 	StatusPacket<ProtocolType> Receive();
 private:
-	std::chrono::milliseconds _recvTimeout;
+	std::chrono::milliseconds recvTimeout;
 	static const size_t _recvBufferSize;
-	int _fd;
-	bool _reportBadPackets;
+	int fd;
+	bool reportBadPackets;
 
 };
 

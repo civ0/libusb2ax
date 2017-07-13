@@ -1,5 +1,5 @@
-#ifndef PROTOCOL_BAUDRATE_H
-#define PROTOCOL_BAUDRATE_H
+#ifndef PROTOCOL_BAUDRATE_HPP
+#define PROTOCOL_BAUDRATE_HPP
 
 #include <cstddef>
 

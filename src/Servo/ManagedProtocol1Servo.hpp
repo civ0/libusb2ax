@@ -1,5 +1,5 @@
-#ifndef SERVO_MANAGEDPROTOCOL1SERVO_H
-#define SERVO_MANAGEDPROTOCOL1SERVO_H
+#ifndef SERVO_MANAGEDPROTOCOL1SERVO_HPP
+#define SERVO_MANAGEDPROTOCOL1SERVO_HPP
 
 #include <atomic>
 #include <cstdint>
@@ -8,13 +8,14 @@
 
 #include "../Controller/USB2AX.hpp"
 #include "../Exception/Exceptions.hpp"
+#include "../Global.hpp"
 #include "../InstructionPacket.hpp"
 #include "../Protocol/Protocols.hpp"
 #include "../ReadOnly.hpp"
-#include "./../ServoManager.hpp"
-#include "./ServoRegister.hpp"
-#include "./Protocol1ServoCommands.hpp"
-#include "./Protocol1Model.hpp"
+#include "../ServoManager.hpp"
+#include "Protocol1Model.hpp"
+#include "Protocol1ServoCommands.hpp"
+#include "ServoRegister.hpp"
 
 
 namespace Dynamixel
@@ -29,22 +30,41 @@ namespace proto = Dynamixel::Protocol;
 class ManagedProtocol1Servo {
 	using p1Model = Protocol1Model;
 	using p1 = Dynamixel::Protocol::Protocol1;
-	using parameterCallback = std::function<void(std::vector<uint8_t>&&)>;
+	using parameterCallback = std::function < void(std::vector<uint8_t>&&) >;
 public: // constructors
 	ManagedProtocol1Servo();
 	ManagedProtocol1Servo(ServoManager<ManagedProtocol1Servo, p1>*, p1Model::Name, uint8_t);
 public: // methods
 	bool Ping();
-	void UpdatePosition();
+	void UpdatePosition(bool);
 	void SetPosition(double);
+	void UpdateSpeed(bool);
+	void SetSpeed(double);
+private:
+	inline parameterCallback GetEmptyCallback()
+	{
+		parameterCallback callback = [this](std::vector<uint8_t>&& parameters) {
+			unused(parameters);
+		};
+		return callback;
+	}
+
+	template <class T>
+	inline void WaitForUpdate(ServoRegister<T>& reg)
+	{
+		while (!reg.Updated()); // wait for update
+		reg.Reset(); // reset update state
+	}
 public: // attributes
 	ServoRegister<uint8_t> ID;
 	ServoRegister<double> GoalPosition;
 	ServoRegister<double> PresentPosition;
+	ServoRegister<double> MovingSpeed;
+	ServoRegister<double> PresentSpeed;
 private: // attributes
-	ServoManager<ManagedProtocol1Servo, p1>* _manager;
-	Protocol1Model _model;
-	uint8_t _id;
+	ServoManager<ManagedProtocol1Servo, p1>* manager;
+	Protocol1Model model;
+	uint8_t id;
 };
 
 }

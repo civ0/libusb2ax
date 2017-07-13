@@ -1,5 +1,5 @@
-#ifndef SERVOMANAGER_H
-#define SERVOMANAGER_H
+#ifndef SERVOMANAGER_HPP
+#define SERVOMANAGER_HPP
 
 #include <atomic>
 #include <chrono>

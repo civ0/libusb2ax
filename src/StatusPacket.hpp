@@ -1,5 +1,5 @@
-#ifndef STATUSPACKET_H
-#define STATUSPACKET_H
+#ifndef STATUSPACKET_HPP
+#define STATUSPACKET_HPP
 
 #include <cstddef>
 #include <cstdint>
@@ -17,15 +17,15 @@ public:
 	using ErrorCode = typename ProtocolType::ErrorCode;
 	StatusPacket() : _valid(false) { }
 public:
-	typename ProtocolType::id_t ID() const;
+	uint8_t ID() const;
 	std::vector<uint8_t> Parameters() const;
 	std::vector<ErrorCode> Errors() const;
 	DecodeState Decode(const std::vector<uint8_t>&);
 private:
 	bool _valid;
-	typename ProtocolType::id_t _id;
-	std::vector<uint8_t> _parameters;
-	std::vector<ErrorCode> _errors;
+	uint8_t id;
+	std::vector<uint8_t> parameters;
+	std::vector<ErrorCode> errors;
 };
 
 }

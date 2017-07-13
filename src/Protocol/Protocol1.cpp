@@ -1,4 +1,4 @@
-#include "./Protocol1.hpp"
+#include "Protocol1.hpp"
 
 namespace ex = Dynamixel::Exception;
 
@@ -7,7 +7,7 @@ namespace Dynamixel
 namespace Protocol
 {
 
-std::vector<uint8_t> Protocol1::PackInstruction(id_t id, Instruction instruction)
+std::vector<uint8_t> Protocol1::PackInstruction(uint8_t id, Instruction instruction)
 {
 	const size_t packetSize = 2 // start
 	                          + 1 // id
@@ -21,13 +21,13 @@ std::vector<uint8_t> Protocol1::PackInstruction(id_t id, Instruction instruction
 	packet[1] = 0xFF;
 	packet[2] = id;
 	packet[3] = 2;
-	packet[4] = static_cast<instr_t>(instruction);
+	packet[4] = static_cast<uint8_t>(instruction);
 	packet[5] = Checksum(packet);
 
 	return packet;
 }
 
-std::vector<uint8_t> Protocol1::PackInstruction(id_t id, Instruction instruction,
+std::vector<uint8_t> Protocol1::PackInstruction(uint8_t id, Instruction instruction,
                 const std::vector<uint8_t>& parameters)
 {
 	const size_t packetSize = 2 // start
@@ -43,7 +43,7 @@ std::vector<uint8_t> Protocol1::PackInstruction(id_t id, Instruction instruction
 	packet[1] = 0xFF;
 	packet[2] = id;
 	packet[3] = packetSize - 4;
-	packet[4] = static_cast<instr_t>(instruction);
+	packet[4] = static_cast<uint8_t>(instruction);
 
 	for (size_t i = 0; i != parameters.size(); ++i)
 		packet[5 + i] = parameters[i];
@@ -53,7 +53,7 @@ std::vector<uint8_t> Protocol1::PackInstruction(id_t id, Instruction instruction
 	return packet;
 }
 
-Protocol1::DecodeState Protocol1::Unpack(const std::vector<uint8_t>& packet, id_t& id,
+Protocol1::DecodeState Protocol1::Unpack(const std::vector<uint8_t>& packet, uint8_t& id,
                 std::vector<uint8_t>& parameters, std::vector<ErrorCode>& errorVec)
 {
 	if (packet.size() < 6) // wait for minimum packet length
@@ -62,7 +62,7 @@ Protocol1::DecodeState Protocol1::Unpack(const std::vector<uint8_t>& packet, id_
 	if (packet[0] != 0xFF || packet[1] != 0xFF) // check if header is correct
 		return DecodeState::Invalid;
 
-	length_t length = packet[3];
+	uint8_t length = packet[3];
 	if (length > packet.size() - 4) // wait for complete packet, if it is longer than minimum length
 		return DecodeState::Ongoing;
 

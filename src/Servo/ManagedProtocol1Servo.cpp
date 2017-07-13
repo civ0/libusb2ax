@@ -13,38 +13,57 @@ ManagedProtocol1Servo::ManagedProtocol1Servo()
 	// if not defined, ServoManager.Servos.emplace will not compile, as it uses the default constructor
 }
 
-ManagedProtocol1Servo::ManagedProtocol1Servo(ServoManager<ManagedProtocol1Servo, p1>* manager,
-                p1Model::Name name, uint8_t id)
-	: _manager(manager), _model(p1Model::FromName(name)), _id(id)
+ManagedProtocol1Servo::ManagedProtocol1Servo(ServoManager<ManagedProtocol1Servo, p1>* man,
+                p1Model::Name name, uint8_t servoID)
+	: manager(man), model(p1Model::FromName(name)), id(servoID)
 {
 	ID.Set(id);
 }
 
 bool ManagedProtocol1Servo::Ping()
 {
-	// auto message = Protocol1ServoCommands::Ping(_id);
-	// auto status = _manager->SendAndReceive(message);
-	// if (status.ID() == _id)
+	// auto message = Protocol1ServoCommands::Ping(id);
+	// auto status = manager->SendAndReceive(message);
+	// if (status.ID() == id)
 	// 	return true;
 	// else
 	return false;
 }
 
-void ManagedProtocol1Servo::SetPosition(double degree)
+void ManagedProtocol1Servo::UpdatePosition(bool wait)
 {
-	auto message = Protocol1ServoCommands::SetPosition(_model, _id, degree);
-	parameterCallback callback = [this](std::vector<uint8_t> parameters) {};
-	_manager->InsertInstruction(std::move(message), std::move(callback));
+	auto message = Protocol1ServoCommands::GetPosition(model, id);
+	parameterCallback callback = [this, wait](std::vector<uint8_t> && parameters) {
+		uint16_t value = parameters[0] + (parameters[1] << 8);
+		this->PresentPosition.Set(static_cast<double>(value) / 1023.0 * 300.0 - 150.0, wait);
+	};
+	manager->InsertInstruction(std::move(message), std::move(callback));
+	if (wait)
+		WaitForUpdate(PresentPosition);
 }
 
-void ManagedProtocol1Servo::UpdatePosition()
+void ManagedProtocol1Servo::SetPosition(double degree)
 {
-	auto message = Protocol1ServoCommands::GetPosition(_model, _id);
-	parameterCallback callback = [this](std::vector<uint8_t> parameters) {
+	auto message = Protocol1ServoCommands::SetPosition(model, id, degree);
+	manager->InsertInstruction(std::move(message), std::move(GetEmptyCallback()));
+}
+
+void ManagedProtocol1Servo::UpdateSpeed(bool wait)
+{
+	auto message = Protocol1ServoCommands::GetSpeed(model, id);
+	parameterCallback callback = [this, wait](std::vector<uint8_t> && parameters) {
 		uint16_t value = parameters[0] + (parameters[1] << 8);
-		this->PresentPosition.Set(static_cast<double>(value) / 1023.0 * 300.0 - 150.0);
+		this->PresentSpeed.Set(static_cast<double>(value / 1023.0), wait);
 	};
-	_manager->InsertInstruction(std::move(message), std::move(callback));
+	manager->InsertInstruction(std::move(message), std::move(callback));
+	if (wait)
+		WaitForUpdate(PresentSpeed);
+}
+
+void ManagedProtocol1Servo::SetSpeed(double speed)
+{
+	auto message = Protocol1ServoCommands::SetSpeed(model, id, speed);
+	manager->InsertInstruction(std::move(message), std::move(GetEmptyCallback()));
 }
 
 }

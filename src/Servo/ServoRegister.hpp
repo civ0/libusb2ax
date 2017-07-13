@@ -1,8 +1,8 @@
-#ifndef SERVO_SERVOREGISTER_H
-#define SERVO_SERVOREGISTER_H
+#ifndef SERVO_SERVOREGISTER_HPP
+#define SERVO_SERVOREGISTER_HPP
 
-#include <shared_mutex>
 #include <mutex>
+#include <shared_mutex>
 #include <thread>
 
 namespace Dynamixel
@@ -15,49 +15,45 @@ class ServoRegister {
 	using read_lock  = std::shared_lock<std::shared_timed_mutex>;
 	using write_lock = std::unique_lock<std::shared_timed_mutex>;
 public:
-	ServoRegister() : _changed(false) {}
+	ServoRegister() : updated(false) {}
 
 	ServoRegister(const ServoRegister<T>& other)
 	{
 		write_lock wl(mtx);
 		read_lock rl(other.mtx);
 
-		_value = other._value;
-		_changed = other._changed;
+		value = other.value;
+		updated = other.updated;
 	}
 
-	inline void Set(T value)
+	inline void Set(T v, bool update = false)
 	{
-		write_lock g(mtx);
-		_value = value;
-	}
-
-	inline void Update(T value)
-	{
-		write_lock g(mtx);
-		_value = value;
-		_changed = true;
-	}
-
-	inline void Reset()
-	{
-		_changed = false;
+		write_lock wl(mtx);
+		value = v;
+		updated = update;
 	}
 
 	inline T Get() const
 	{
-		read_lock g(mtx);
-		return _value;
+		read_lock rl(mtx);
+		return value;
 	}
 
-	inline bool Changed()
+	inline bool Updated()
 	{
-		return _changed;
+		read_lock rl(mtx);
+		return updated;
+	}
+
+	inline void Reset()
+	{
+		write_lock wl(mtx);
+		updated = false;
 	}
 private:
 	mutable std::shared_timed_mutex mtx;
-	T _value;
-	bool _changed;
+	T value;
+	bool updated;
 };
 
 }

@@ -1,6 +1,6 @@
 #include "ServoManager.hpp"
 
-#include "./Servo/ManagedProtocol1Servo.hpp"
+#include "Servo/ManagedProtocol1Servo.hpp"
 
 namespace Dynamixel
 {
@@ -41,7 +41,7 @@ void ServoManager<Servo, Protocol>::Update(void* thisPointer)
 	        static_cast<ServoManager<Servo, Protocol>*>(thisPointer);
 
 	for (auto it = manager->Servos.begin(); it != manager->Servos.end(); ++it) {
-		it->second.UpdatePosition();
+		it->second.UpdatePosition(false);
 	}
 	std::vector<std::tuple<InstructionPacket<Protocol>, parameterCallback>>
 	                loop(manager->instructions.begin(), manager->instructions.end());
@@ -55,7 +55,7 @@ void ServoManager<Servo, Protocol>::Update(void* thisPointer)
 			manager->instructions.pop_back();
 			manager->usb2ax.Send(std::get<0>(instr));
 			auto response = manager->usb2ax.Receive<Protocol>();
-			std::get<1>(instr)(response.Parameters());
+			std::get<1>(instr)(std::forward<std::vector<uint8_t>>(response.Parameters()));
 		}
 
 		manager->usb2ax.Send(std::get<0>(*loopIndex));

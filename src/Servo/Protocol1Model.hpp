@@ -1,9 +1,9 @@
-#ifndef SERVO_PROTOCOL1MODEL_H
-#define SERVO_PROTOCOL1MODEL_H
-
-#include "./../ReadOnly.hpp"
+#ifndef SERVO_PROTOCOL1MODEL_HPP
+#define SERVO_PROTOCOL1MODEL_HPP
 
 #include <cstdint>
+
+#include "../ReadOnly.hpp"
 
 namespace Dynamixel
 {

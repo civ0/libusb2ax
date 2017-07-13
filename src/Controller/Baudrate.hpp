@@ -1,5 +1,5 @@
-#ifndef ADAPTER_BAUDRATE_H
-#define ADAPTER_BAUDRATE_H
+#ifndef ADAPTER_BAUDRATE_HPP
+#define ADAPTER_BAUDRATE_HPP
 
 #include <cstddef>
 #include <termios.h>

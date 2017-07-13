@@ -1,5 +1,5 @@
-#ifndef READONLY_H
-#define READONLY_H
+#ifndef READONLY_HPP
+#define READONLY_HPP
 
 namespace Dynamixel
 {
@@ -10,15 +10,15 @@ class ReadOnly {
 public:
 	inline Primitive operator()() const
 	{
-		return _value;
+		return value;
 	}
 protected:
 	template <class T> inline T operator=(const T& rhs)
 	{
-		return _value = rhs;
+		return value = rhs;
 	}
 
-	Primitive _value;
+	Primitive value;
 };
 
 }

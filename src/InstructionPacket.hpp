@@ -1,5 +1,5 @@
-#ifndef INSTRUCTIONPACKET_H
-#define INSTRUCTIONPACKET_H
+#ifndef INSTRUCTIONPACKET_HPP
+#define INSTRUCTIONPACKET_HPP
 
 #include <cstddef>
 #include <cstdint>
@@ -11,49 +11,47 @@ namespace Dynamixel
 template <class ProtocolType>
 class InstructionPacket {
 public:
-	InstructionPacket(typename ProtocolType::id_t id,
-	                  typename ProtocolType::Instruction instruction)
-		: _packet(ProtocolType::PackInstruction(id, instruction)) {}
+	InstructionPacket(uint8_t id, typename ProtocolType::Instruction instruction)
+		: packet(ProtocolType::PackInstruction(id, instruction)) {}
 
-	InstructionPacket(typename ProtocolType::id_t id,
-	                  typename ProtocolType::Instruction instruction,
+	InstructionPacket(uint8_t id, typename ProtocolType::Instruction instruction,
 	                  const std::vector<uint8_t>& parameters)
-		: _packet(ProtocolType::PackInstruction(id, instruction, parameters)) {}
+		: packet(ProtocolType::PackInstruction(id, instruction, parameters)) {}
 
-	InstructionPacket(const InstructionPacket& other) : _packet(other._packet) {}
+	InstructionPacket(const InstructionPacket& other) : packet(other.packet) {}
 
-	InstructionPacket(InstructionPacket&& other) : _packet(other._packet) {}
+	InstructionPacket(InstructionPacket&& other) : packet(other.packet) {}
 
 	~InstructionPacket() = default;
 
 public:
 	decltype(auto) size() const
 	{
-		return _packet.size();
+		return packet.size();
 	}
 
 	decltype(auto) operator[](size_t index) const
 	{
-		return _packet[index];
+		return packet[index];
 	}
 
 	decltype(auto) begin()
 	{
-		return _packet.begin();
+		return packet.begin();
 	}
 
 	decltype(auto) end()
 	{
-		return _packet.end();
+		return packet.end();
 	}
 
 	const uint8_t* DataPointer() const
 	{
-		return &_packet.front();
+		return &packet.front();
 	}
 
 private:
-	std::vector<uint8_t> _packet;
+	std::vector<uint8_t> packet;
 };
 
 }
