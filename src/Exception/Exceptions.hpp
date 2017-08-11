@@ -14,7 +14,10 @@ namespace Exception
 {
 
 typedef boost::error_info<struct tag_StringInfo, std::string> StringInfo;
+
 struct DynamixelException : virtual boost::exception, virtual std::exception {};
+
+struct DynamixelNotImplementedException : virtual boost::exception, virtual std::exception {};
 
 struct DynamixelControllerException : virtual boost::exception, virtual std::exception {};
 

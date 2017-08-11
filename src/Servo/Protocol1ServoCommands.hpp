@@ -24,6 +24,8 @@ public:
 	static InstructionPacket<p1> GetSpeed(const p1Model&, uint8_t);
 	static InstructionPacket<p1> SetSpeed(const p1Model&, uint8_t, double);
 	static InstructionPacket<p1> GetTemperature(const p1Model&, uint8_t);
+	static InstructionPacket<p1> GetPresentLoad(const p1Model&, uint8_t);
+	static InstructionPacket<p1> SetTorqueLimit(const p1Model&, uint8_t, double);
 };
 
 }

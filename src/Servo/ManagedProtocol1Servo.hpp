@@ -41,10 +41,12 @@ public: // methods
 	void UpdateSpeed(bool);
 	void SetSpeed(double);
 	void UpdateTemperature(bool);
+	void UpdateLoad(bool);
+	void SetTorqueLimit(double);
 private:
 	inline parameterCallback GetEmptyCallback()
 	{
-		parameterCallback callback = [this](std::vector<uint8_t>&& parameters) {
+		parameterCallback callback = [this](std::vector<uint8_t> && parameters) {
 			unused(parameters);
 		};
 		return callback;
@@ -63,6 +65,8 @@ public: // attributes
 	ServoRegister<double> MovingSpeed;
 	ServoRegister<double> PresentSpeed;
 	ServoRegister<uint8_t> PresentTemperature;
+	ServoRegister<double> PresentLoad;
+	ServoRegister<double> TorqueLimit;
 private: // attributes
 	ServoManager<ManagedProtocol1Servo, p1>* manager;
 	Protocol1Model model;

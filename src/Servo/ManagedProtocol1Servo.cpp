@@ -32,7 +32,7 @@ bool ManagedProtocol1Servo::Ping()
 
 /*
  * Callback Explanation
- * 
+ *
  * The callback lambda gets called from the update thread. Because the lambda uses other members,
  * the this pointer must be captured
  */
@@ -76,12 +76,32 @@ void ManagedProtocol1Servo::SetSpeed(double speed)
 void ManagedProtocol1Servo::UpdateTemperature(bool wait)
 {
 	auto message = Protocol1ServoCommands::GetTemperature(model, id);
-	parameterCallback callback = [this, wait](std::vector<uint8_t>&& parameters) {
+	parameterCallback callback = [this, wait](std::vector<uint8_t> && parameters) {
 		this->PresentTemperature.Set(parameters[0], wait);
 	};
 	manager->InsertInstruction(std::move(message), std::move(callback));
 	if (wait)
 		WaitForUpdate(PresentTemperature);
+}
+
+void ManagedProtocol1Servo::UpdateLoad(bool wait)
+{
+	auto message = Protocol1ServoCommands::GetPresentLoad(model, id);
+	parameterCallback callback = [this, wait](std::vector<uint8_t> && parameters) {
+		uint16_t value = parameters[0] + (parameters[1] << 8);
+		int direction = (value & (1 << 10)) == 0 ? -1 : 1;
+		int load = value & 0x3FF;
+		this->PresentLoad.Set(static_cast<double>((direction * load) / 1023.0), wait);
+	};
+	manager->InsertInstruction(std::move(message), std::move(callback));
+	if (wait)
+		WaitForUpdate(PresentLoad);
+}
+
+void ManagedProtocol1Servo::SetTorqueLimit(double torqueLimit)
+{
+	throw ex::DynamixelNotImplementedException()
+	                << ex::StringInfo("ManagedProtocol1Servo::SetTorqueLimit not implemented");
 }
 
 }

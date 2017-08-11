@@ -46,6 +46,7 @@ void ServoManager<Servo, Protocol>::Update(void* thisPointer)
 		it->second.UpdatePosition(false);
 		it->second.UpdateSpeed(false);
 		it->second.UpdateTemperature(false);
+		it->second.UpdateLoad(false);
 	}
 	// create vector from previous instructions
 	std::vector<std::tuple<InstructionPacket<Protocol>, parameterCallback>>

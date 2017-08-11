@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+namespace ex = Dynamixel::Exception;
+
 namespace Dynamixel
 {
 namespace Servo
@@ -50,6 +52,18 @@ InstructionPacket<p1> Protocol1ServoCommands::SetSpeed(const p1Model& model, uin
 InstructionPacket<p1> Protocol1ServoCommands::GetTemperature(const p1Model& model, uint8_t id)
 {
 	return InstructionPacket<p1>(id, Instruction::Read, {model.PresentTemperature(), 1});
+}
+
+InstructionPacket<p1> Protocol1ServoCommands::GetPresentLoad(const p1Model& model, uint8_t id)
+{
+	return InstructionPacket<p1>(id, Instruction::Read, {model.PresentLoad(), 2});
+}
+
+InstructionPacket<p1> Protocol1ServoCommands::SetTorqueLimit(const p1Model& model, uint8_t id,
+                double torque)
+{
+	throw ex::DynamixelNotImplementedException()
+	                << ex::StringInfo("Protocol1ServoCommands::SetTorqueLimit not implemented");
 }
 
 }
