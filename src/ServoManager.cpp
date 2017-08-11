@@ -62,13 +62,13 @@ void ServoManager<Servo, Protocol>::Update(void* thisPointer)
 			auto instr = manager->instructions.back();
 			manager->instructions.pop_back();
 			manager->usb2ax.Send(std::get<0>(instr));
-			auto response = manager->usb2ax.Receive<Protocol>();
+			auto response = manager->usb2ax.template Receive<Protocol>();
 			std::get<1>(instr)(std::forward<std::vector<uint8_t>>(response.Parameters()));
 		}
 
 		// always execute one instruction from the loop
 		manager->usb2ax.Send(std::get<0>(*loopIndex));
-		auto response = manager->usb2ax.Receive<Protocol>();
+		auto response = manager->usb2ax.template Receive<Protocol>();
 		std::get<1>(*loopIndex)(response.Parameters());
 
 		if (loopIndex != loop.end() - 1)
