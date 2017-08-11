@@ -11,7 +11,7 @@ The code for communicating with the acutuators is heavily based on [resibots/lib
 ### Dependencies:
 
 * C++14
-+ boost
+* boost
 
 Modify test.cpp to your Servo IDs and compile. To run the program without superuser rights and a
 nice device name for the USB2AX you can install the included udev rule.
