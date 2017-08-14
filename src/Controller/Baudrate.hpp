@@ -73,7 +73,7 @@ inline int GetBaudrate(const unsigned int baudrate)
 		break;
 	default:
 		throw Exception::DynamixelException() << Exception::StringInfo("Invalid baudrate: "
-		                                      + baudrate);
+		                                      + std::to_string(baudrate));
 	}
 }
 

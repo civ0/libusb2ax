@@ -19,10 +19,10 @@ namespace Controller
 class USB2AX {
 public:
 	USB2AX()
-		: recvTimeout(100), fd(-1), reportBadPackets(false) {}
+		: recvTimeout(100), fd(-1) {}
 
 	USB2AX(const std::string& name, int baudrate = B1000000, size_t timeout = 100)
-		: recvTimeout(timeout), fd(-1), reportBadPackets(false)
+		: recvTimeout(timeout), fd(-1)
 	{
 		OpenSerial(name, baudrate);
 	}
@@ -44,7 +44,6 @@ private:
 	std::chrono::milliseconds recvTimeout;
 	static const size_t _recvBufferSize;
 	int fd;
-	bool reportBadPackets;
 
 };
 

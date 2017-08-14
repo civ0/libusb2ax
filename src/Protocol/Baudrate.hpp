@@ -3,6 +3,7 @@
 
 #include <cstddef>
 
+#include "../Global.hpp"
 #include "Protocol1.hpp"
 
 namespace Dynamixel
@@ -13,6 +14,7 @@ namespace Protocol
 template <class Protocol>
 inline uint8_t GetBaudrateID(unsigned int baudrate)
 {
+	unused(baudrate);
 	return 0;
 }
 

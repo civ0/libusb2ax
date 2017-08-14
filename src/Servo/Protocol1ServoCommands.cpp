@@ -20,6 +20,17 @@ InstructionPacket<p1> Protocol1ServoCommands::Ping(uint8_t id)
 	return InstructionPacket<p1>(id, Instruction::Ping);
 }
 
+InstructionPacket<p1> Protocol1ServoCommands::GetAlarmLED(const p1Model& model, uint8_t id)
+{
+	return InstructionPacket<p1>(id, Instruction::Read, {model.AlarmLED(), 1});
+}
+
+InstructionPacket<p1> Protocol1ServoCommands::SetAlarmLED(const p1Model& model, uint8_t id,
+                uint8_t value)
+{
+	return InstructionPacket<p1>(id, Instruction::Write, {model.AlarmLED(), value});
+}
+
 InstructionPacket<p1> Protocol1ServoCommands::GetPosition(const p1Model& model, uint8_t id)
 {
 	return InstructionPacket<p1>(id, Instruction::Read, {model.PresentPosition(), 2});

@@ -34,8 +34,27 @@ bool ManagedProtocol1Servo::Ping()
  * Callback Explanation
  *
  * The callback lambda gets called from the update thread. Because the lambda uses other members,
- * the this pointer must be captured
+ * the this pointer must be captured. The capturing must be done by value, as the execution of
+ * the lambda can happen after the creating function returned.
  */
+
+void ManagedProtocol1Servo::UpdateAlarmLED(bool wait)
+{
+	auto message = Protocol1ServoCommands::GetAlarmLED(model, id);
+	parameterCallback callback = [this, wait](std::vector<uint8_t> && parameters) {
+		this->AlarmLED.Set(parameters[0], wait);
+	};
+	manager->InsertInstruction(std::move(message), std::move(callback));
+	if (wait)
+		WaitForUpdate(AlarmLED);
+}
+
+void ManagedProtocol1Servo::SetAlarmLED(uint8_t value)
+{
+	auto message = Protocol1ServoCommands::SetAlarmLED(model, id, value);
+	manager->InsertInstruction(std::move(message), GetEmptyCallback());
+	// don't move result of GetEmptyCallback() as it would prevent copy elision
+}
 
 void ManagedProtocol1Servo::UpdatePosition(bool wait)
 {
@@ -52,7 +71,7 @@ void ManagedProtocol1Servo::UpdatePosition(bool wait)
 void ManagedProtocol1Servo::SetPosition(double degree)
 {
 	auto message = Protocol1ServoCommands::SetPosition(model, id, degree);
-	manager->InsertInstruction(std::move(message), std::move(GetEmptyCallback()));
+	manager->InsertInstruction(std::move(message), GetEmptyCallback());
 }
 
 void ManagedProtocol1Servo::UpdateSpeed(bool wait)
@@ -70,7 +89,7 @@ void ManagedProtocol1Servo::UpdateSpeed(bool wait)
 void ManagedProtocol1Servo::SetSpeed(double speed)
 {
 	auto message = Protocol1ServoCommands::SetSpeed(model, id, speed);
-	manager->InsertInstruction(std::move(message), std::move(GetEmptyCallback()));
+	manager->InsertInstruction(std::move(message), GetEmptyCallback());
 }
 
 void ManagedProtocol1Servo::UpdateTemperature(bool wait)

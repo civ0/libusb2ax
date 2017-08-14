@@ -19,6 +19,8 @@ class Protocol1ServoCommands {
 	using Instruction = Protocol::Protocol1::Instruction;
 public:
 	static InstructionPacket<p1> Ping(uint8_t id);
+	static InstructionPacket<p1> GetAlarmLED(const p1Model&, uint8_t);
+	static InstructionPacket<p1> SetAlarmLED(const p1Model&, uint8_t, uint8_t);
 	static InstructionPacket<p1> GetPosition(const p1Model&, uint8_t);
 	static InstructionPacket<p1> SetPosition(const p1Model&, uint8_t, double);
 	static InstructionPacket<p1> GetSpeed(const p1Model&, uint8_t);

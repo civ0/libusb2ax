@@ -62,6 +62,8 @@ void ServoManager<Servo, Protocol>::Update(void* thisPointer)
 			auto instr = manager->instructions.back();
 			manager->instructions.pop_back();
 			manager->usb2ax.Send(std::get<0>(instr));
+			// the template keyword is needed to tell the compiler that
+			// Receive<Protocol>() is a template function/type
 			auto response = manager->usb2ax.template Receive<Protocol>();
 			std::get<1>(instr)(std::forward<std::vector<uint8_t>>(response.Parameters()));
 		}

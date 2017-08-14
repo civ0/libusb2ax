@@ -36,6 +36,8 @@ public: // constructors
 	ManagedProtocol1Servo(ServoManager<ManagedProtocol1Servo, p1>*, p1Model::Name, uint8_t);
 public: // methods
 	bool Ping();
+	void UpdateAlarmLED(bool);
+	void SetAlarmLED(uint8_t);
 	void UpdatePosition(bool);
 	void SetPosition(double);
 	void UpdateSpeed(bool);
@@ -60,6 +62,7 @@ private:
 	}
 public: // attributes
 	ServoRegister<uint8_t> ID;
+	ServoRegister<uint8_t> AlarmLED;
 	ServoRegister<double> GoalPosition;
 	ServoRegister<double> PresentPosition;
 	ServoRegister<double> MovingSpeed;
