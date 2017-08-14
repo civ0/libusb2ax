@@ -1,4 +1,4 @@
-CXX=g++
+CXX=clang++
 RM=rm -rf
 
 INCLUDES=-I/usr/include/boost
