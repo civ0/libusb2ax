@@ -1,8 +1,10 @@
 #include "ServoManager.hpp"
 
-#include "Servo/ManagedProtocol1Servo.hpp"
+#include "ManagedProtocol1Servo.hpp"
 
 namespace Dynamixel
+{
+namespace Servo
 {
 
 template <class Servo, class Protocol>
@@ -84,4 +86,5 @@ void ServoManager<Servo, Protocol>::Update(void* thisPointer)
 
 template class ServoManager<Servo::ManagedProtocol1Servo, Protocol::Protocol1>;
 
+}
 }

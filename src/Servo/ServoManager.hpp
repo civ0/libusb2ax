@@ -15,13 +15,15 @@
 #include <utility>
 #include <vector>
 
-#include "Controller/USB2AX.hpp"
-#include "Exception/Exceptions.hpp"
-#include "InstructionPacket.hpp"
-#include "Protocol/Protocols.hpp"
-#include "StatusPacket.hpp"
+#include "../Controller/USB2AX.hpp"
+#include "../Exception/Exceptions.hpp"
+#include "../InstructionPacket.hpp"
+#include "../Protocol/Protocols.hpp"
+#include "../StatusPacket.hpp"
 
 namespace Dynamixel
+{
+namespace Servo
 {
 
 namespace con = Dynamixel::Controller;
@@ -52,6 +54,7 @@ private:
 };
 
 
+}
 }
 
 #endif

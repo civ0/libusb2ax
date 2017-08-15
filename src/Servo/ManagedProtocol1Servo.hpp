@@ -12,7 +12,7 @@
 #include "../InstructionPacket.hpp"
 #include "../Protocol/Protocols.hpp"
 #include "../ReadOnly.hpp"
-#include "../ServoManager.hpp"
+#include "ServoManager.hpp"
 #include "Protocol1Model.hpp"
 #include "Protocol1ServoCommands.hpp"
 #include "ServoRegister.hpp"

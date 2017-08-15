@@ -15,13 +15,13 @@ SOURCES=src/Protocol/Protocol1.cpp                                              
 	src/Servo/Protocol1Model.cpp                                                               \
 	src/Servo/Protocol1ServoCommands.cpp                                                       \
 	src/Servo/ManagedProtocol1Servo.cpp                                                        \
+	src/Servo/ServoManager.cpp                                                                 \
 	src/StatusPacket.cpp                                                                       \
-	src/ServoManager.cpp                                                                       \
-	src/test.cpp
+	src/demo.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 
-EXECUTABLE=test
+EXECUTABLE=demo
 
 all: $(SOURCES) $(EXECUTABLE)
 

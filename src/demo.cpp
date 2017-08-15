@@ -12,7 +12,7 @@
 #include "Exception/Exceptions.hpp"
 #include "Protocol/Protocols.hpp"
 #include "Servo/Servos.hpp"
-#include "ServoManager.hpp"
+#include "Servo/ServoManager.hpp"
 
 namespace dy = Dynamixel;
 namespace con = Dynamixel::Controller;
@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 		// std::vector<uint8_t> servoIDs;
 		// for (uint8_t i = 1; i <= 18; ++i)
 		// servoIDs.push_back(i);
-		dy::ServoManager<sv::ManagedProtocol1Servo, p1> manager(argv[1]);
+		sv::ServoManager<sv::ManagedProtocol1Servo, p1> manager(argv[1]);
 		for (auto id : servoIDs)
 			manager.Servos.emplace(id, sv::ManagedProtocol1Servo(&manager, sv::Protocol1Model::Name::AX12, id));
 		manager.StartUpdating();

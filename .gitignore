@@ -28,6 +28,7 @@
 *.out
 *.app
 test
+demo
 
 # Sublime Text files
 *.sublime-*
