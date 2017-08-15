@@ -44,7 +44,6 @@ private:
 	std::chrono::milliseconds recvTimeout;
 	static const size_t _recvBufferSize;
 	int fd;
-
 };
 
 }
