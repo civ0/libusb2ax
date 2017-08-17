@@ -24,7 +24,6 @@ int main(int argc, char** argv)
 	using p1 = Dynamixel::Protocol::Protocol1;
 
 	try {
-
 		std::vector<uint8_t> servoIDs{19, 20, 21};
 		// std::vector<uint8_t> servoIDs;
 		// for (uint8_t i = 1; i <= 18; ++i)

@@ -16,7 +16,7 @@ inline int GetBaudrate(const unsigned int baudrate)
 	switch (baudrate) {
 	case 0:
 		return B0;
-		break; /* hang up */
+		break; // hang up
 	case 50:
 		return B50;
 		break;
