@@ -8,11 +8,11 @@
 #include <string>
 #include <vector>
 
-#include "Controller/USB2AX.hpp"
-#include "Exception/Exceptions.hpp"
-#include "Protocol/Protocols.hpp"
-#include "Servo/Servos.hpp"
-#include "Servo/ServoManager.hpp"
+#include "src/Controller/USB2AX.hpp"
+#include "src/Exception/Exceptions.hpp"
+#include "src/Protocol/Protocols.hpp"
+#include "src/Servo/Servos.hpp"
+#include "src/Servo/ServoManager.hpp"
 
 namespace dy = Dynamixel;
 namespace con = Dynamixel::Controller;
