@@ -1,26 +1,18 @@
 cmake_minimum_required(VERSION 2.8.2)
-project(libusb2ax)
+#project(libusb2ax)
 
 enable_testing()
-
-option(BUILD_TESTS "Build test programs" ON)
+option(BUILD_TESTS "Build test programs" OFF)
 
 set(CMAKE_CXX_STANDARD 14)
 
-find_package(Threads REQUIRED)
+add_subdirectory(src)
 
+find_package(Threads REQUIRED)
 find_package(Boost COMPONENTS exception REQUIRED)
 
-#add_compile_options(-O3 -Wall -pedantic)
-
-file(GLOB SOURCES demo.cpp
-	src/*.cpp
-	src/Controller/*.cpp 
-	src/Protocol/*.cpp 
-	src/Servo/*.cpp)
-
-add_executable(demo ${SOURCES})
-target_link_libraries (demo ${CMAKE_THREAD_LIBS_INIT})
+add_executable(demo demo.cpp)
+target_link_libraries (demo usb2ax ${CMAKE_THREAD_LIBS_INIT})
 
 if(BUILD_TESTS)
 

@@ -117,7 +117,7 @@ StatusPacket<ProtocolType> USB2AX::Receive()
 		}
 
 		// wait the time one byte needs to arrive
-		auto sleepFor = std::chrono::duration<double>(8.0 / currentbBudrate);
+		auto sleepFor = std::chrono::duration<double>(7.0 / currentbBudrate);
 		std::this_thread::sleep_for(sleepFor);
 
 		if (currentTime - time > recvTimeout)
