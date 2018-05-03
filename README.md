@@ -19,3 +19,8 @@ nice device name for the USB2AX you can install the included udev rule.
 After that you can run:
 
     ./test /dev/usb2ax0
+
+Run using Docker:
+
+    docker build -t usb2ax .
+    docker run --rm --device=/dev/usb2ax0:/dev/usb2ax usb2ax
