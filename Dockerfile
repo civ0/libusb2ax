@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 RUN apt update
-RUN apt install -y bash-completion tmux build-essential cmake libboost-all-dev
+RUN apt install -y build-essential cmake libboost-exception-dev
 
 COPY . /libusb2ax
 
